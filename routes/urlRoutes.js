@@ -1,9 +1,7 @@
 const express = require('express');
 const { body, param, validationResult } = require('express-validator');
-const { nanoid } = require('nanoid');
 const Url = require('../models/Url');
 const router = express.Router();
-
 
 router.get('/', (req, res) => {
   res.send(`
@@ -51,10 +49,8 @@ router.post('/shorten',
 
     const { longUrl } = req.body;
 
-    let code = nanoid(6);
-    while (await Url.findOne({ shortCode: code })) {
-      code = nanoid(6);
-    }
+    // TODO: Generate unique short code here
+    const code = 'your_generated_code_here';
 
     const newUrl = new Url({ longUrl, shortCode: code });
     await newUrl.save();
@@ -66,15 +62,18 @@ router.post('/shorten',
   }
 );
 
-
 router.get('/:code', async (req, res) => {
   const url = await Url.findOne({ shortCode: req.params.code });
 
+  if (!url) {
+    return res.status(404).json({ message: 'Short URL not found.' });
+  }
+
   url.clickCount++;
   await url.save();
+
   res.redirect(url.longUrl);
 });
-
 
 router.get('/stats/:code',
   param('code').notEmpty().withMessage('Code is required'),
