@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const urlRoutes = require('../routes/urlRoutes'); // fixed path
+const urlRoutes = require('./routes/urlRoutes'); // fixed path
 const serverless = require('serverless-http');
 
 dotenv.config();
