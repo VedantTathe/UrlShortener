@@ -1,4 +1,4 @@
-const app = require('./index'); // your main file
+const app = require('./api/index'); // your main file
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
