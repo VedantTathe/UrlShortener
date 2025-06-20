@@ -17,4 +17,6 @@ app.use('/', urlRoutes);
 // app.listen(PORT, () => console.log(`Server running...`));
 
 
-module.exports = app;
+const serverless = require('serverless-http');
+
+module.exports = serverless(app);
